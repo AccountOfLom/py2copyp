@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 """py2copyp URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
