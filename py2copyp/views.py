@@ -113,23 +113,22 @@ def search_illust(request):
     return HttpResponse(json.dumps(json_result))
 
 
-# 排行榜/过去排行榜
-# mode:
-#   daily - 每日
-#   weekly - 每周
-#   monthly - 每月
-#   male - 男性热门
-#   female - 女性热门
-#   original - 原创
-#   rookie - Rookie
-#   daily_r18 - R18每日
-#   weekly_r18 - R18每周
-#   male_r18
-#   female_r18
-#   r18g
+# 作品排行
+# mode: [day, week, month, day_male, day_female, week_original, week_rookie, day_manga]
+# date: '2016-08-01'
+# mode (Past): [day, week, month, day_male, day_female, week_original, week_rookie,
+#               day_r18, day_male_r18, day_female_r18, week_r18, week_r18g]
 def ranking_all(request):
     api = pixivPassSniAuthApi()
-    json_result = api.ranking_all(request.GET.get('mode'), 1, 50)
+    json_result = api.illust_ranking(request.GET.get('mode'), "for_ios", request.GET.get('date'))
+    return HttpResponse(json.dumps(json_result))
+
+
+# 排行榜 下一页
+def ranking_all_parse_qs(request):
+    api = pixivPassSniAuthApi()
+    next_qs = api.parse_qs(request.GET.get('next_url'))
+    json_result = api.illust_ranking(**next_qs)
     return HttpResponse(json.dumps(json_result))
 
 
